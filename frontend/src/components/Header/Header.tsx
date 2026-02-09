@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import LogoutButton from "../LogoutButton";
-import { useEffect } from "react";
+import { UserNav } from "../ui/user-nav";
+import { useLogout } from "@/hooks/useLogout";
 
 const getPageTitle = (pathname: string) => {
   switch (pathname) {
@@ -19,6 +20,7 @@ const getPageTitle = (pathname: string) => {
 export default function Header() {
   const { user } = useAuth();
   const location = useLocation();
+  const { handleLogout } = useLogout();
 
   const pageTitle = getPageTitle(location.pathname);
 
@@ -27,17 +29,15 @@ export default function Header() {
   }, [pageTitle]);
 
   return (
-    <header className="bg-gray-800 text-white py-4 px-6 flex items-center justify-between shadow-md sticky top-0 z-50">
-      <div>
-        <h1 className="text-2xl font-bold">{pageTitle}</h1>
-        {user && <p className="text-sm">Logged in as: {user.email}</p>}
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-600 font-bold">
-          {user?.email[0].toUpperCase()}
+    <>
+      <header className="bg-gray-800 text-white py-4 px-6 flex items-center justify-between shadow-md sticky top-0 z-50">
+        <div>
+          <h1 className="text-2xl font-bold">{pageTitle}</h1>
         </div>
-        <LogoutButton />
-      </div>
-    </header>
+        <div className="flex items-center gap-4">
+          {user && <UserNav user={user} onLogout={handleLogout} />}
+        </div>
+      </header>
+    </>
   );
 }
