@@ -4,8 +4,15 @@ import ErrorPage from "../ErrorPage";
 import Button from "@/components/Button/Button";
 import Modal from "@/components/Modal/Modal";
 import TaskForm from "./_component/task-form";
-import TaskItem from "./_component/task-item";
 import { toast } from "sonner";
+import Table from "@/components/Table/Table";
+import TaskItem from "./_component/task-item";
+
+const listNameTable = [
+  { name: "Title" },
+  { name: "Status" },
+  { name: "Actions" },
+];
 
 export default function Tasks() {
   const { tasks, addTask, toggleTask, deleteTask, editTask, error } =
@@ -51,19 +58,36 @@ export default function Tasks() {
       <div className="flex mb-4 gap-2">
         <Button onClick={openAddModal}>Add Task</Button>
       </div>
-
-      <ul className="space-y-2">
-        {tasks.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            onToggle={toggleTask}
-            onDelete={() => handleOnDelete(task.id)}
-            onEdit={() => openEditModal(task)}
-          />
-        ))}
-      </ul>
-
+      {tasks.length === 0 ? (
+        <div className="text-center text-gray-500">No tasks available.</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <Table>
+            <Table.Header>
+              {listNameTable.map((item, index) => (
+                <th
+                  key={index}
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                >
+                  {item.name}
+                </th>
+              ))}
+            </Table.Header>
+            <Table.Body
+              data={tasks}
+              render={(task) => (
+                <TaskItem
+                  task={task}
+                  key={task.id}
+                  onToggle={toggleTask}
+                  onDelete={() => handleOnDelete(task.id)}
+                  onEdit={() => openEditModal(task)}
+                />
+              )}
+            />
+          </Table>
+        </div>
+      )}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
