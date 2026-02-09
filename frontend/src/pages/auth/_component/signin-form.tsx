@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import Input from "@/components/Input/Input";
+import Label from "@/components/Label/Label";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
@@ -24,28 +26,25 @@ export default function SignInForm() {
       </div>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <label htmlFor="email" className="font-normal!">
+          <Label htmlFor="email" className="font-normal!">
             Email
-          </label>
-          <input
+          </Label>
+          <Input
             id="email"
-            placeholder="email@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="py-2 px-4 rounded-lg block w-full border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="email@example.com"
           />
         </div>
         <div className="grid gap-2">
-          <label htmlFor="password" className="font-normal!">
+          <Label htmlFor="password" className="font-normal!">
             Password
-          </label>
-          <input
-            type="password"
+          </Label>
+          <Input
             id="password"
-            placeholder="********"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="py-2 px-4 rounded-lg block w-full border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="********"
           />
         </div>
         <button

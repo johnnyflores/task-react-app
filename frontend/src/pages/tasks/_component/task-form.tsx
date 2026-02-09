@@ -1,3 +1,6 @@
+import Button from "@/components/Button/Button";
+import Input from "@/components/Input/Input";
+import Label from "@/components/Label/Label";
 import { useState } from "react";
 
 type TaskFormProps = {
@@ -21,28 +24,30 @@ const TaskForm: React.FC<TaskFormProps> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-2">
-        <label className="block font-semibold">Task Title</label>
-        <input
-          className="w-full border p-2 rounded"
+        <Label htmlFor="task-title" className="font-normal!">
+          Task Title
+        </Label>
+        <Input
+          id="task-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter task title"
           required
         />
       </div>
       <div className="flex justify-end gap-2 mt-4">
-        <button
-          type="button"
+        <Button
           onClick={onCancel}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 text-black!"
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
         >
           Save
-        </button>
+        </Button>
       </div>
     </form>
   );
